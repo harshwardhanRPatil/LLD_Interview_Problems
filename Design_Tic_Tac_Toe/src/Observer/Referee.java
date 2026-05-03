@@ -7,9 +7,12 @@ public class Referee implements BoardObserver{
 
     private boolean gameEnded = false;
     Board board= Board.getInstance();
+    private int moveCount = 0;
+    private String resultMessage = "";
 
     @Override
-    public void onMovePlaced(int row, int col, Symbol symbol){
+    public void onMovePlaced(int row, int col, Symbol symbol) {
+        moveCount++;
         if (checkRow(row, symbol) ||
                 checkColumn(col, symbol) ||
                 checkDiagonals(row, col, symbol)) {
@@ -17,6 +20,10 @@ public class Referee implements BoardObserver{
             System.out.println("Result: " + symbol + " wins!");
             // Logic to stop the game loop
             this.gameEnded = true;
+            resultMessage = "Winner is: " + symbol;
+        }else if(moveCount==9){
+            this.gameEnded = true;
+            resultMessage = "It's a Draw!";
         }
     }
 
@@ -59,4 +66,5 @@ public class Referee implements BoardObserver{
 
         return win;
     }
+    public String getResultMessage() { return resultMessage; }
 }

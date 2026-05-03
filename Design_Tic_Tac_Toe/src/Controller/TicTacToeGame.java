@@ -37,8 +37,13 @@ public class TicTacToeGame implements BoardGames{
         do{
             Position move = currentPlayer.getPlayerStrategy().makeMove(board);
             board.makeMove(move, currentPlayer.getSymbol());
-            switchPlayer();
-        }while(referee.isGameEnded());
+            if (!referee.isGameEnded()) {
+                switchPlayer();
+            }
+        }while(!referee.isGameEnded());
+        System.out.println("Final game state reached.");
+        referee.getResultMessage();
+
     }
 
     private void switchPlayer() {
